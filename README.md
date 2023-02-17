@@ -6,4 +6,4 @@
 ![example workflow](https://github.com/rreezN/dtu_mlopsproject/actions/workflows/isort.yml/badge.svg)
 
 ## Purpose
-The purpose for this repository is include functions that makes it easier to work with the Pepper Robots, and thereby stream-lining the development of future research projects.
+The purpose for this repository is to include functions that makes it easier to work with the Pepper robots, and thereby stream-lining the development of future research projects.
