@@ -7,3 +7,7 @@
 
 ## Purpose
 The purpose for this repository is to include functions that makes it easier to work with the Pepper robots, and thereby stream-lining the development of future research projects.
+
+## Router Connection Information  
+Name:     **Pepper**  
+Password: **60169283**
