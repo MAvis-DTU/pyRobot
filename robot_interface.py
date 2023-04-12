@@ -56,6 +56,14 @@ class RobotClient():
         self.client_socket = socket.socket()  # instantiate
         self.client_socket.connect((self.host, self.port))  # connect to the server
 
+
+        '''
+        Direction mapping for the robot. The orientation of the robot is given by the 
+        angle of the world coordinate system. We will assume that world/level coordinate 
+        system is aligned with classroom such that north is facing the direction of the 
+        board/screens.
+
+        '''
         self.direction_mapping = { 'Move(N)': 90,
                         'Move(E)': 0,
                         'Move(S)': 270,
@@ -66,6 +74,17 @@ class RobotClient():
                         'Push(W,W)': 180}
 
     def forward(self,distance,block):
+        """
+        Commands the robot to move forward a given distance in meters. 
+
+        Parameters
+        ----------
+        'distance' : float
+            The distance to move forward in meters.
+        'block' : bool
+            If true, the robot will wait until the motion is completed before continuing with the next command.
+            If false, the robot will continue immediately. 
+        """
         forward_cmd = {
             'type': 'forward',
             'distance': float(distance),
@@ -76,6 +95,21 @@ class RobotClient():
         data = self.client_socket.recv(1024).decode() 
     
     def say(self, s):
+        """
+        Commands the robot to speak out the given sentence.
+
+        The speech is generated using the onboard text-to-speech synthesis.
+        Its intonation can sometimes be a bit strange. It is often possible to improve the
+        understandability of the speech by inserting small breaks a key location in the sentence.
+        This can be accomplished by inserting \\pau=$MS\\ commands, where $MS is the length of the
+        break in milliseconds, e.g., robot.say("Hello \\pau=500\\ world!") will cause the robot to
+        pause for 500 milliseconds before continuing with the sentence.
+
+        Parameters
+        ----------
+        'sentence' : string
+            The sentence to be spoken out loud.
+        """
         say_cmd = {
             'type': 'say',
             'sentence': s
@@ -85,6 +119,19 @@ class RobotClient():
         data = self.client_socket.recv(1024)
 
     def turn(self,angle,block):
+        """
+        Commands the robot to turn around its vertical axis.
+
+        The position of the robot will remain approximately constant during the motion.
+        Expect that the actually turned angle will vary a few degrees from the commanded values.
+        The speed of the motion will be determined dynamically, i.e., the further it has to turn,
+        the faster it will move.
+
+        Parameters
+        ----------
+        'theta' : float
+            The angle to turn in radians in the counter-clockwise direction.
+        """
         turn_cmd = {
             'type': 'turn',
             'angle': float(angle),
@@ -96,6 +143,11 @@ class RobotClient():
 
     
     def stand(self):
+        '''
+        Commands the robot to stand up in a straight position.
+
+        '''
+
         stand_cmd = {
             'type': 'stand'
         }
@@ -104,6 +156,10 @@ class RobotClient():
         data = self.client_socket.recv(1024)
 
     def shutdown(self):
+        ''''
+        Shuts down the robot.
+
+        '''	
         shutdown_cmd = {
             'type': 'shutdown'
         }
@@ -112,6 +168,23 @@ class RobotClient():
         data = self.client_socket.recv(1024)
 
     def move(x,y,theta,block):
+        '''
+        Commands the robot to move to a given position and orientation. Three degrees of freedom are specified: 
+        the x and y coordinates of the position and the orientation theta. The position is specified in meters
+        relative to the robot's initial position. The orientation is specified in radians relative to the robot's
+        initial orientation. 
+
+        Parameters
+        ----------
+        'x' : float
+            The x coordinate of the position in meters.
+        'y' : float
+            The y coordinate of the position in meters.
+        'theta' : float
+            The orientation in radians.
+        'block' : bool
+            If true, the function will block until the robot has reached the target position.
+        '''
         move_cmd = { 
             'type': 'move',
             'x': float(x),
@@ -136,12 +209,23 @@ class RobotClient():
     
     def face_direction(self,current_direction, target_direction):
         '''
-        :param degree: current direction of the robot in degrees
-        :return: turns robot to face the target direction in the shortest route, and returns the new direction
+        Turns the robot to face the desired direction given the current direction 
+        of the robot via the shortest route. 
+
+        Parameters
+        ----------
+        'current_direction' : int 
+            The current direction of the robot in degrees.
+        'target_direction' : int
+            The desired direction of the robot in degrees.
+        
+        Returns
+        -------
+        'target_direction' : int
+            Both turns the robot physically and returns the new direction of the robot.
         '''
 
         # Facing east respective to the map is direction 0.
-        # Make the robot turn to the desired angle via. the shortest route
         d = (target_direction - current_direction + 540) % 360 - 180
 
         # turn robot
@@ -154,6 +238,18 @@ class RobotClient():
         return target_direction
     
     def declare_direction(self, move):
+        '''
+        Commands the robot to say the direction it is moving in.
+
+        Parameters
+        ----------
+        'move' : string
+            The direction the robot is moving in.
+        
+        Returns
+        -------
+            Makes the robot say the direction it is moving in.
+        '''
         direction = {'Move(N)': "I am going North",
                      'Move(E)': 'I am going East',
                      'Move(S)': 'I am going South',
@@ -167,9 +263,25 @@ class RobotClient():
     def listen(self, duration=3, channels=[0,0,1,0],playback=False):
 
         '''
-        :param duration: duration of the recording in seconds
-        :param channels: list of 4 booleans indicating which channels (microphones) to record [left, right, front, back]
-        :param playback: boolean indicating whether to play back the recording after recording
+        Commands the robot to listen for a given duration.
+
+        Parameters:
+        -----------
+        'duration' : int
+            The duration of the listening in seconds.
+        'channels' : list
+            The channels to listen on. The default is [0,0,1,0] which 
+            means that the robot will listen on the front microphone. 
+            You can also listen on other channels by changing the list.
+        playback : bool
+            If true, the robot will play back the audio it has recorded.
+        
+        Returns:
+        --------
+            The audio data recorded by the robot is saved in a folder
+            /tmp/ on the given computer. This can then used for speech
+            recognition using Whisper.
+
         '''
 
         listen_cmd = {
@@ -218,9 +330,11 @@ if __name__ == '__main__':
         
         # Move forward (distance equal to cell). 
         if 'Push' in action:
+
             # This can change depending on robot and box
             robot.forward(0.55, block=True)
             robot.forward(-0.07, block=True)
+            
         else:
             robot.forward(0.50, block=True)
 
