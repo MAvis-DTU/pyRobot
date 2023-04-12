@@ -19,7 +19,7 @@ while True:
         robot.say('What about now?')
 
     time.sleep(2)
-    
+
     # Transcribe the audio file
     robot.listen(2)
 
@@ -43,12 +43,12 @@ while True:
         robot.turn(degrees(-90), block=True) 
         robot.forward(1, block=True)
 
-    elif 'shut down' or 'shutdown' or 'turn off' in text: 
-        robot.say('Goodbye')
-        robot.shutdown()
-
     elif 'turn left' in text: 
         robot.turn(degrees(90), block=True)
 
     elif 'turn right' in text:
         robot.turn(degrees(-90), block=True)
+
+    elif 'shut down' or 'shutdown' or 'turn off' in text: 
+        robot.say('Goodbye')
+        robot.shutdown()
