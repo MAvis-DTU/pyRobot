@@ -11,3 +11,10 @@ The purpose for this repository is to include functions that makes it easier to 
 ## Router Connection Information  
 Name:     **Pepper**  
 Password: **60169283**
+
+## Pepper Robots
+Username: **nao**
+106: **pepper**
+108: **Sokrates1**
+
+The other two robots have either **salt** or **r2dtu**.
