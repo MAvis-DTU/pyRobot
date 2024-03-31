@@ -16,7 +16,7 @@ namespace OV5640 {
 
     void fail(const char* msg) {
         fprintf(stderr, "%s\n", msg);
-        exit(-1);
+        // exit(-1);
     }
 
     int xioctl(int fd, int request, void* arg) {

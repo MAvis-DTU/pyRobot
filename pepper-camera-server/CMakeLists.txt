@@ -34,14 +34,10 @@ set(NAOQI_LIBRARIES
         ${NAOQI_LIB_SEARCH_PATH}/icu/lib/libicutest.so
         ${NAOQI_LIB_SEARCH_PATH}/icu/lib/libicutu.so
         ${NAOQI_LIB_SEARCH_PATH}/icu/lib/libicuuc.so
-        ${NAOQI_LIB_SEARCH_PATH}/systemd/lib/libgudev-1.0.so
+        ${NAOQI_LIB_SEARCH_PATH}/systemd/lib/libgudev-1.0.so.0.2.0
         ${NAOQI_LIB_SEARCH_PATH}/systemd/lib/libnss_myhostname.so.2
-        ${NAOQI_LIB_SEARCH_PATH}/systemd/lib/libsystemd-daemon.so
-        ${NAOQI_LIB_SEARCH_PATH}/systemd/lib/libsystemd-id128.so
-        ${NAOQI_LIB_SEARCH_PATH}/systemd/lib/libsystemd-journal.so
-        ${NAOQI_LIB_SEARCH_PATH}/systemd/lib/libsystemd-login.so
-        ${NAOQI_LIB_SEARCH_PATH}/systemd/lib/libsystemd.so
-        ${NAOQI_LIB_SEARCH_PATH}/systemd/lib/libudev.so
+        ${NAOQI_LIB_SEARCH_PATH}/systemd/lib/libsystemd.so.0.3.1
+        ${NAOQI_LIB_SEARCH_PATH}/systemd/lib/libudev.so.1.5.0
         ${NAOQI_LIB_SEARCH_PATH}/xz_utils/lib/liblzma.so
         ${NAOQI_LIB_SEARCH_PATH}/zlib/lib/libz.so
         ${NAOQI_LIB_SEARCH_PATH}/openssl/lib/libcrypto.so

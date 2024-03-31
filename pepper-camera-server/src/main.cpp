@@ -15,6 +15,8 @@
 #include <alvision/alimage.h>
 #include <alproxies/alvideodeviceproxy.h>
 #include <alproxies/almemoryproxy.h>
+#include <alproxies/alfacedetectionproxy.h>
+
 #pragma GCC diagnostic pop
 
 #include "OV5640.h"
@@ -93,6 +95,14 @@ void startup_camera_server(CameraServer* server, const char* path, int id, int p
     server_address.sin_family = AF_INET;
     server_address.sin_addr.s_addr = INADDR_ANY;
     server_address.sin_port = htons(port);  // Choose any available port
+    int opt = 1;
+
+    // Set socket option
+    if (setsockopt(server->server_socket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt, sizeof(opt)) < 0) {
+        std::cerr << "Error setting socket option\n";
+        close(server->server_socket);
+        exit(EXIT_FAILURE);
+    }
 
     // Bind the socket to the address
     if (bind(server->server_socket, reinterpret_cast<struct sockaddr*>(&server_address), sizeof(server_address)) == -1) {
@@ -150,8 +160,8 @@ void process_request(int clientSocket) {
 
 int main(int argc, const char** argv) {
 
-    bool forward_camera_enabled = true;
-    bool down_camera_enabled = false;
+    bool forward_camera_enabled = false;
+    bool down_camera_enabled = true;
 
     boost::shared_ptr<AL::ALBroker> broker = AL::ALBroker::createBroker("LocalBroker", "0.0.0.0", 54000, "127.0.0.1", 9559);
 
@@ -168,7 +178,6 @@ int main(int argc, const char** argv) {
     printf("Robot version: %s\n", version.c_str());
 
     // Find version specific paths to camera devices
-
     int forward_cam_path_id;
     int forward_cam_device_id;
     int down_cam_path_id;
@@ -190,6 +199,7 @@ int main(int argc, const char** argv) {
         std::exit(-1);
     }
 
+
     CameraServer forward_cam;
     CameraServer down_cam;
 
@@ -203,12 +213,20 @@ int main(int argc, const char** argv) {
         startup_camera_server(&down_cam, down_path.c_str(), down_cam_device_id, 12346);
     }
 
+    // AL::ALTrackerProxy al_tracker;
+    // al_tracker.stopTracker();
+    // al_tracker.unregisterAllTargets();
+    // al_tracker.registerTarget("Face", 0.1);
+    // al_tracker.setMode("WholeBody");
+    // al_tracker.track("Face");
+    // printf("Tracker started\n");
+    
     // Do the thing
     printf("Starting\n");
     signal(SIGINT, sig_handler);
     running = true;
     while (running) {
-        usleep(100000);
+        usleep(10000);
     }
     printf("Stopping\n");
 
