@@ -55,7 +55,7 @@ As mentioned, a Robot Application is required in order for us to show the number
 **The first step** is to access the project properties. Here you must fill in the boxes as seen in the image. Make an application title, and choose an application ID. Notice, the applications directory name will have the same name as the ID, once deployed on the robot.
 ```
 All robot applications can be found via ssh on the robot under the following path,
-/home/nao/.local/.......
+/home/nao/.local/share/PackageManager/apps/
 ```
 Choose requirements, and for this specific application with the numbers, we select *Language Independent*.
 
