@@ -18,11 +18,11 @@ Username: **nao**
 108: **Sokrates1**  
 152: **salt**
 
-# Important Links for Pepper (NAO) after Aldebaran shutdown (2nd of June 2025)
-NAO Cloud resources: https://github.com/aldebaran
-Software Versions: https://github.com/aldebaran/nao6-binaries
-Applications and languages: https://github.com/aldebaran/nao6-apps
-Documentation: https://github.com/aldebaran/nao6-doc-sdk
+# Important Links for Pepper (NAO) after Aldebaran shutdown (2nd of June 2025)  
+NAO Cloud resources: https://github.com/aldebaran  
+Software Versions: https://github.com/aldebaran/nao6-binaries  
+Applications and languages: https://github.com/aldebaran/nao6-apps  
+Documentation: https://github.com/aldebaran/nao6-doc-sdk  
 
 
 # Setting up numbers on tablets for Symbolic AI Course (and how to stop them from appearing.)
