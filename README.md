@@ -17,7 +17,7 @@ Username: **nao**
 106 & 110: **pepper**  
 108: **Sokrates1**  
 152: **salt**  
-The one that does not work: *chili*
+The one that does not work: **chili**
 
 # Important Links for Pepper (NAO) after Aldebaran shutdown (2nd of June 2025)  
 NAO Cloud resources: https://github.com/aldebaran  
