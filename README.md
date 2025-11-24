@@ -47,7 +47,7 @@ found [here](https://support.unitedrobotics.group/en/support/solutions/articles/
 
 ## Getting to know the robot through Choreograph
 ```
-For the following brief tutorials, I will be referring to som of the documentation made by Aldebaran.
+For the following brief tutorials, I will be referring to some of the documentation made by Aldebaran.
 ```
 #### Connecting to the robot
 Once you have the *correct* Choreograph version downloaded, you can connect to the robot. Using Choreograph you can do two things.
